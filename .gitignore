@@ -1,0 +1,30 @@
+# secrets & personal data
+.env
+data/*
+!data/.gitkeep
+documents/*
+!documents/.gitkeep
+logs/*
+!logs/.gitkeep
+*.key
+secret.key
+*.db
+*.sqlite*
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+# node
+node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/*.tsbuildinfo
+# models / temp
+*.gguf
+*.bin
+*.safetensors
+.e2e-data/
+*.tmp

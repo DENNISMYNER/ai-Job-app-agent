@@ -1,0 +1,19 @@
+# Optional. Local development works without Docker (see INSTALLATION.md).
+# Ollama runs on the HOST (recommended: GPU access); the container reaches it via host.docker.internal.
+services:
+  app:
+    build: { context: ., dockerfile: docker/Dockerfile }
+    ports: ["127.0.0.1:8000:8000"]   # bound to localhost only
+    environment:
+      JOBAGENT_OLLAMA_BASE_URL: http://host.docker.internal:11434
+      JOBAGENT_BROWSER_HEADLESS: "true"   # no display in a container; CAPTCHA/login pauses need a headed local run
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    volumes: ["./data:/app/data", "./documents:/app/documents", "./logs:/app/logs"]
+    restart: unless-stopped
+  # Uncomment to run PostgreSQL instead of SQLite, and set JOBAGENT_DATABASE_URL on `app`.
+  # db:
+  #   image: postgres:16
+  #   environment: { POSTGRES_USER: jobagent, POSTGRES_PASSWORD: change-me, POSTGRES_DB: jobagent }
+  #   volumes: ["pgdata:/var/lib/postgresql/data"]
+  #   ports: ["127.0.0.1:5432:5432"]
+# volumes: { pgdata: {} }
